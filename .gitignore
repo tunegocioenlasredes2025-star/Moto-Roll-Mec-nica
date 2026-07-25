@@ -1,0 +1,16 @@
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+.claude/
+
+# Temporales
+*.log
+_preview_*.png
+_slice_*.png
+node_modules/
+.vercel
