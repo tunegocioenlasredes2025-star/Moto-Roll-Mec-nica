@@ -94,6 +94,8 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:600; line-height:1.04; le
 .section__lead{ color:var(--gray); font-size:clamp(15px,1.4vw,18px); margin-top:14px; }
 
 section{ padding:clamp(64px,9vw,120px) 0; position:relative; }
+/* el header es fijo: evita que los anclas dejen el título debajo de la barra */
+section[id]{ scroll-margin-top:86px; }
 
 /* ---------- Buttons ---------- */
 .btn{
@@ -156,7 +158,7 @@ section{ padding:clamp(64px,9vw,120px) 0; position:relative; }
   letter-spacing:.04em; font-size:17px; line-height:1;
 }
 .nav__brand-text em{ color:var(--orange); font-style:normal; }
-.nav__links{ display:flex; gap:28px; }
+.nav__links{ display:flex; gap:clamp(14px,2vw,28px); }
 .nav__links a{
   font-family:var(--font-display); text-transform:uppercase; letter-spacing:.05em;
   font-size:13.5px; font-weight:500; color:var(--gray); position:relative; padding:4px 0;
@@ -190,7 +192,7 @@ section{ padding:clamp(64px,9vw,120px) 0; position:relative; }
   font-size:16px; padding:14px 4px; border-bottom:1px solid var(--line-soft); color:var(--gray);
 }
 .mobile-menu a.btn{ margin-top:14px; border-bottom:0; color:#04310f; }
-.nav.is-open .mobile-menu{ max-height:480px; padding:16px 22px 26px; opacity:1; visibility:visible; }
+.nav.is-open .mobile-menu{ max-height:640px; padding:16px 22px 26px; opacity:1; visibility:visible; }
 
 /* ---------- HERO ---------- */
 .hero{
@@ -322,6 +324,168 @@ section{ padding:clamp(64px,9vw,120px) 0; position:relative; }
   border:1px solid rgba(255,101,1,.22);
 }
 .services__foot p{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:.02em; font-size:17px; }
+
+/* ---------- MARCAS ---------- */
+.brands{ background:var(--black-2); }
+.brands__grid{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:14px; list-style:none;
+}
+.brandcard{
+  position:relative; flex:1 1 152px; max-width:196px;
+  display:grid; place-items:center;
+  min-height:98px; padding:20px 18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.012));
+  border:1px solid var(--line); border-radius:14px;
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  overflow:hidden;
+  transition:transform .35s var(--ease), border-color .35s, box-shadow .35s, background .35s;
+}
+.brandcard::before{
+  content:''; position:absolute; inset:0; z-index:0; opacity:0;
+  background:radial-gradient(70% 90% at 50% 110%, rgba(255,101,1,.30), transparent 70%);
+  transition:opacity .4s var(--ease);
+}
+.brandcard img,
+.brandcard--type span{
+  position:relative; z-index:1;
+  /* unifica logos de colores dispares en un blanco cromado */
+  filter:brightness(0) invert(1);
+  opacity:.62;
+  transition:opacity .35s var(--ease), filter .35s var(--ease), transform .35s var(--ease);
+}
+/* Balance óptico: los logos van de 1.25:1 a 5.6:1 y sus tamaños intrínsecos
+   son dispares, así que cada uno se encaja en una caja fija con object-fit
+   (max-width/height no escalarían hacia arriba los SVG chicos). */
+.brandcard img{ width:112px; height:30px; object-fit:contain; }  /* wordmarks anchos */
+.brandcard img.bc--mid{ height:42px; }                           /* emblema + texto */
+.brandcard img.bc--sq{ height:54px; }                            /* emblema alto (Honda) */
+.brandcard--type span{
+  filter:none;
+  font-family:var(--font-display); font-weight:600; text-transform:uppercase;
+  letter-spacing:.16em; font-size:23px; line-height:1; color:#fff;
+}
+.brandcard:hover{
+  transform:translateY(-6px);
+  border-color:rgba(255,101,1,.5);
+  box-shadow:0 18px 40px -20px rgba(255,101,1,.55);
+}
+.brandcard:hover::before{ opacity:1; }
+.brandcard:hover img,
+.brandcard:hover .brandcard--type span,
+.brandcard--type:hover span{
+  opacity:1; transform:scale(1.06);
+}
+.brandcard:hover img{ filter:brightness(0) invert(1) drop-shadow(0 0 14px rgba(255,101,1,.55)); }
+.brandcard--type:hover span{ text-shadow:0 0 16px rgba(255,101,1,.55); }
+.brands__note{
+  text-align:center; color:var(--gray-2); font-size:14.5px; margin-top:26px;
+}
+
+/* ---------- CILINDRADAS ---------- */
+.cc__grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:16px; }
+.cc{
+  position:relative; padding:28px 24px 26px; overflow:hidden;
+  background:linear-gradient(180deg, var(--panel), var(--black-2));
+  border:1px solid var(--line); border-radius:var(--radius);
+  transition:transform .3s var(--ease), border-color .3s, box-shadow .3s;
+}
+.cc::after{
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, var(--orange), transparent);
+  transform:scaleX(0); transform-origin:left; transition:transform .45s var(--ease);
+}
+.cc:hover{ transform:translateY(-5px); border-color:rgba(255,101,1,.4); box-shadow:var(--shadow); }
+.cc:hover::after{ transform:scaleX(1); }
+.cc--mid{ border-color:rgba(255,101,1,.26); }
+.cc__tag{
+  display:inline-block; font-family:var(--font-display); font-weight:500;
+  text-transform:uppercase; letter-spacing:.18em; font-size:11.5px;
+  color:var(--orange); margin-bottom:14px;
+}
+.cc__num{
+  display:block; font-family:var(--font-display); font-weight:700; line-height:1;
+  font-size:clamp(30px,3.4vw,40px); color:var(--white); margin-bottom:14px;
+}
+.cc__num em{ font-style:normal; font-size:.45em; color:var(--gray-2); font-weight:400; letter-spacing:.04em; }
+.cc__num small{ font-size:.46em; color:var(--gray); font-weight:500; }
+.cc p{ color:var(--gray); font-size:14.5px; }
+
+.origin__grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+.origin{
+  display:flex; gap:16px; align-items:flex-start;
+  padding:22px 24px; border-radius:var(--radius);
+  background:linear-gradient(120deg, rgba(255,101,1,.075), rgba(255,101,1,.015));
+  border:1px solid rgba(255,101,1,.2);
+  transition:transform .3s var(--ease), border-color .3s;
+}
+.origin:hover{ transform:translateY(-4px); border-color:rgba(255,101,1,.42); }
+.origin__ico{
+  flex-shrink:0; width:46px; height:46px; border-radius:12px; display:grid; place-items:center;
+  background:radial-gradient(circle at 30% 25%, rgba(255,101,1,.24), rgba(255,101,1,.05));
+  border:1px solid rgba(255,101,1,.32); color:var(--orange);
+}
+.origin h3{ font-size:18px; text-transform:uppercase; margin-bottom:6px; font-weight:600; }
+.origin p{ color:var(--gray); font-size:14px; }
+
+/* ---------- SEGUROS / SINIESTROS ---------- */
+.insurance{ background:var(--black-2); }
+.insurance__panel{
+  display:grid; grid-template-columns:1.4fr .85fr;
+  border:1px solid rgba(255,101,1,.3); border-radius:22px; overflow:hidden;
+  background:
+    radial-gradient(90% 120% at 0% 0%, rgba(255,101,1,.13), transparent 55%),
+    linear-gradient(180deg, var(--panel), var(--black-2));
+  box-shadow:var(--shadow);
+}
+.insurance__main{ padding:clamp(28px,4vw,46px); }
+.insurance__title{
+  font-family:var(--font-display); font-weight:700; text-transform:uppercase;
+  font-size:clamp(24px,3.4vw,40px); line-height:1.04; margin-bottom:14px;
+}
+.insurance__lead{ color:var(--gray); font-size:clamp(15px,1.4vw,17px); max-width:60ch; margin-bottom:26px; }
+.insurance__list{ display:grid; grid-template-columns:1fr 1fr; gap:18px 22px; }
+.insurance__list li{ display:flex; gap:12px; align-items:flex-start; }
+.insurance__ico{
+  flex-shrink:0; width:36px; height:36px; border-radius:10px; display:grid; place-items:center;
+  background:rgba(255,101,1,.12); border:1px solid rgba(255,101,1,.3); color:var(--orange);
+}
+.insurance__list div{ font-size:13.8px; color:var(--gray); line-height:1.5; }
+.insurance__list strong{
+  display:block; font-family:var(--font-display); font-weight:600; text-transform:uppercase;
+  letter-spacing:.02em; font-size:15px; color:var(--white); margin-bottom:2px;
+}
+.insurance__cta{
+  display:flex; flex-direction:column; align-items:flex-start; justify-content:center;
+  gap:12px; padding:clamp(28px,3.4vw,38px);
+  background:linear-gradient(160deg, rgba(255,101,1,.16), rgba(255,101,1,.03));
+  border-left:1px solid rgba(255,101,1,.24);
+}
+.insurance__badge{
+  width:56px; height:56px; border-radius:14px; display:grid; place-items:center;
+  background:radial-gradient(circle at 30% 25%, rgba(255,101,1,.3), rgba(255,101,1,.06));
+  border:1px solid rgba(255,101,1,.4); color:var(--orange); margin-bottom:4px;
+}
+.insurance__cta h3{ font-size:21px; text-transform:uppercase; font-weight:600; }
+.insurance__cta p{ color:var(--gray); font-size:14.2px; }
+.insurance__cta .btn{ margin-top:6px; }
+.insurance__note{ font-size:12.5px; color:var(--gray-2); }
+
+@media (max-width:1024px){
+  .cc__grid{ grid-template-columns:1fr; }
+  .insurance__panel{ grid-template-columns:1fr; }
+  .insurance__cta{ border-left:0; border-top:1px solid rgba(255,101,1,.24); }
+}
+@media (max-width:760px){
+  .origin__grid{ grid-template-columns:1fr; }
+  .insurance__list{ grid-template-columns:1fr; gap:16px; }
+}
+@media (max-width:560px){
+  .brandcard{ flex:1 1 118px; min-height:84px; padding:16px 12px; }
+  .brandcard img{ width:92px; height:24px; }
+  .brandcard img.bc--mid{ height:34px; }
+  .brandcard img.bc--sq{ height:44px; }
+  .brandcard--type span{ font-size:19px; }
+}
 
 /* ---------- PROCESS ---------- */
 .steps{ display:grid; grid-template-columns:repeat(5,1fr); gap:16px; counter-reset:step; }
@@ -537,7 +701,9 @@ section{ padding:clamp(64px,9vw,120px) 0; position:relative; }
   .footer__bar{ flex-direction:column; text-align:center; }
   .mobile-cta{ display:flex; }
   .wa-float{ display:none; }
-  body{ padding-bottom:0; }
+  /* deja aire para que la barra fija no tape el final del pie */
+  body{ padding-bottom:calc(86px + env(safe-area-inset-bottom)); }
+  section[id]{ scroll-margin-top:74px; }
   .hero__cta .btn{ flex:1; }
   .gallery__grid{ grid-template-columns:1fr 1fr; grid-auto-rows:150px; }
   .shot--lg img{ min-height:100%; }
