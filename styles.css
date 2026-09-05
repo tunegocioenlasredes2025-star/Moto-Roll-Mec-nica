@@ -488,7 +488,7 @@ section[id]{ scroll-margin-top:86px; }
 }
 
 /* ---------- PROCESS ---------- */
-.steps{ display:grid; grid-template-columns:repeat(5,1fr); gap:16px; counter-reset:step; }
+.steps{ display:grid; grid-template-columns:repeat(5,1fr); gap:16px; counter-reset:step; list-style:none; padding:0; margin:0; }
 .step{
   position:relative; padding:28px 22px 26px;
   background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
